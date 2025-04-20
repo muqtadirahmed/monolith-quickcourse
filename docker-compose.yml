@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  mongo-main:
+    image: mongo:4.4
+    container_name: mongo-main
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-main-data:/data/db
+    networks:
+      - micro-net
+
+  monolith:
+    build:
+      context: ./monolith
+    container_name: monolith
+    restart: unless-stopped
+    ports:
+      - "4000:3000"  
+    environment:
+      - MONGO_URL=mongodb://mongo-main:27017/monolith-db
+    depends_on:
+      - mongo-main
+    networks:
+      - micro-net
+
+volumes:
+  mongo-main-data:
+
+networks:
+  micro-net:
+    driver: bridge
