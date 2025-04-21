@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { userSchema } from "../../utils/zod/students/validate";
 import { getMongoDBInstance } from "../../config/mongo";
-import { username } from 'username';
 export const studentBenefit = async (req: Request, res: Response) => {
     const parseResult = userSchema.safeParse(req.body);
 
@@ -27,9 +26,8 @@ export const studentBenefit = async (req: Request, res: Response) => {
                 message: "A user with this UID already exists.",
                 uid
             });
-            return
+            return ``
         }
-        const user = await username()
 
         const newUser = {
             name,
@@ -37,7 +35,6 @@ export const studentBenefit = async (req: Request, res: Response) => {
             uid,
             email,
             place,
-            username: user,
             yearOfBirth,
             profileUrl,
             studentBenefit: true,
