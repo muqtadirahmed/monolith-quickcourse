@@ -26,7 +26,7 @@ export const studentBenefit = async (req: Request, res: Response) => {
                 message: "A user with this UID already exists.",
                 uid
             });
-            return ``
+            return
         }
 
         const newUser = {
