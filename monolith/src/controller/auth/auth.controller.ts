@@ -10,6 +10,7 @@ const secretKey = Buffer.from("your-32-byte-secret-key-123456789012", "utf-8");
 
 export const signup = async (req: Request, res: Response) => {
     try {
+        console.log("hello")
         const parsed = signupSchema.safeParse(req.body);
         if (!parsed.success) {
             res.status(400).json({
@@ -18,7 +19,6 @@ export const signup = async (req: Request, res: Response) => {
             });
             return
         }
-
 
         const { name, email, password } = parsed.data;
         const db = await getMongoDBInstance();
@@ -36,7 +36,9 @@ export const signup = async (req: Request, res: Response) => {
         await publicCollection.insertOne({ name, email, createdAt: new Date(), uid: uuid, verified: false });
         await privateCollection.insertOne({ email, password: hashedPassword, uid: uuid, createdAt: new Date() });
 
-        res.status(201).json({ message: "User created successfully" });
+        res.status(201).json({
+            message: "User created successfully",
+        });
 
     } catch (err) {
         console.error("Signup Error:", err);

@@ -6,4 +6,4 @@ COPY . .
 
 RUN npm install
 
-CMD ["node", "run" , "dev"]
+CMD ["npm", "run" , "dev"]
